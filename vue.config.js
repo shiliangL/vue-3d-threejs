@@ -6,7 +6,7 @@
  * @Description:
  */
 module.exports = {
-  publicPath: './vue-3d-research/',
+  publicPath: '/',
   outputDir: 'dist',
   assetsDir: 'static',
   productionSourceMap: false,
