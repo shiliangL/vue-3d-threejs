@@ -1,60 +1,75 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-16 13:48:55
- * @LastEditTime: 2021-07-16 14:34:58
+ * @LastEditTime: 2021-07-17 15:34:29
  * @LastEditors: Do not edit
  * @Description:
 -->
 <template>
-  <div class="home">
-    3d
+  <div class="Home">
+    <canvas ref="3d"> 3d </canvas>
+    <div class="fix-botton">
+      <el-button
+        plain
+        type="primary"
+        @click="changeAnimation"
+      >切换动画</el-button>
+    </div>
   </div>
 </template>
 
 <script>
 
-import * as THREE from 'three'
+import { AppThree } from '@/utils/three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 export default {
-  name: 'Home',
-  data () {
-    return {
-
-    }
-  },
   mounted () {
     this.$nextTick().then(() => {
-      this.initThree()
+      this.loadModels()
     })
   },
   methods: {
-    initThree () {
-      // 创建一个场景
-      this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 10)
-      this.camera.position.z = 1
-      this.scene = new THREE.Scene()
-
-      const geometry = new THREE.BoxGeometry(1, 1, 1)
-      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-
-      this.cube = new THREE.Mesh(geometry, material)
-      this.scene.add(this.cube)
-      this.camera.position.z = 5
-      this.renderer = new THREE.WebGLRenderer({ antialias: true })
-
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
-      document.body.appendChild(this.renderer.domElement)
-
-      const { cube, renderer, scene, camera } = this
-      const animate = () => {
-        requestAnimationFrame(animate)
-        cube.rotation.x += 0.01
-        cube.rotation.y += 0.01
-        renderer.render(scene, camera)
-      }
-
-      animate()
+    loadModels () {
+      const loader = new GLTFLoader()
+      loader.load(
+        '/models/robot.glb',
+        (gltf) => {
+          const model = gltf.scene
+          model.scale.set(1.6, 1.6, 1.6)
+          model.position.y = -2.2
+          const canvas = this.$refs['3d']
+          if (Array.isArray(gltf.animations) && gltf.animations.length) {
+            this.animationsName = gltf.animations.map(item => item.name)
+          }
+          this.app = new AppThree(canvas, model, gltf.animations)
+          // console.log(gltf, 'gltf模型信息')
+          // console.log(this.app, ' this.app')
+        },
+        undefined,
+        loadError => {
+          console.log(loadError, 'loadError')
+        }
+      )
+    },
+    changeAnimation () {
+      const { app } = this
+      if (!app) return
+      if (!this.animationsName) return
+      const clips = this.animationsName || []
+      let clipIndex = clips.indexOf(app.mixer.clip)
+      clipIndex = (clipIndex + 1) % clips.length
+      app.mixer.play(clips[clipIndex])
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.fix-botton {
+  left: 50%;
+  bottom: 20px;
+  position: fixed;
+  transform: translate(-50%, 0%);
+}
+</style>
