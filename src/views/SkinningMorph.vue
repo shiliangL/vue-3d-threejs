@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-16 13:48:55
- * @LastEditTime: 2021-07-18 16:48:44
+ * @LastEditTime: 2021-07-19 10:43:33
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -44,7 +44,7 @@ export default {
     loadModels () {
       const loader = new GLTFLoader()
       loader.load(
-        '/models/robot.glb',
+        'models/model_3/scene.gltf',
         (gltf) => {
           const model = gltf.scene
           const animations = gltf.animations

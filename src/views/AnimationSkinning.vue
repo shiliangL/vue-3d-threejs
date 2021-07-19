@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-16 13:48:55
- * @LastEditTime: 2021-07-18 16:50:27
+ * @LastEditTime: 2021-07-19 12:09:17
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -10,6 +10,14 @@
     <canvas ref="3d"> 3d </canvas>
     <div class="fix-foot">
       <div class="fix-botton">
+        <div
+          class="color-item"
+          @click="setCarColor(item)"
+          v-for="(item,index) in colorAry"
+          :style="{backgroundColor : item}"
+          :key="index"
+        ></div>
+
         <el-button
           plain
           v-for="(item,index) in animationsName"
@@ -37,16 +45,21 @@ export default {
   },
   data () {
     return {
-      animationsName: []
+      animationsName: [],
+      colorAry: [
+        'rgb(216, 27, 67)', 'rgb(142, 36, 170)', 'rgb(81, 45, 168)', 'rgb(48, 63, 159)', 'rgb(30, 136, 229)', 'rgb(0, 137, 123)',
+        'rgb(67, 160, 71)', 'rgb(251, 192, 45)', 'rgb(245, 124, 0)', 'rgb(230, 74, 25)', 'rgb(233, 30, 78)', 'rgb(156, 39, 176)',
+        'rgb(0, 0, 0)']
     }
   },
   methods: {
     loadModels () {
       const loader = new GLTFLoader()
       loader.load(
-        '/models/gltf/Soldier.glb',
+        '/models/bmw_m3/scene.gltf',
         (gltf) => {
           const model = gltf.scene
+          console.log(model.position, 'xx')
           const animations = gltf.animations
           console.log(gltf, '模型信息')
           const canvas = this.$refs['3d']
@@ -57,34 +70,22 @@ export default {
           this.app = new AppThree({ canvas, model, animations })
           const { camera, renderer, scene } = this.app
           // camera
-          camera.position.set(-5, 3, 10)
-          camera.lookAt(new THREE.Vector3(0, 2, 0))
+          // camera.position.set(510, 128, 0)
+          const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5)
+          directionalLight.position.set(-4, 8, 4)
+          const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.4)
+          hemisphereLight.position.set(0, 8, 0)
+          const hHelper = new THREE.HemisphereLightHelper(hemisphereLight, 5)
+          scene.add(directionalLight)
 
-          // scene
-          scene.background = new THREE.Color(0xfffff)
-          scene.fog = new THREE.Fog(0xfffff, 20, 100)
-          // scene - lights
-          const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)
-          hemiLight.position.set(0, 20, 0)
-          scene.add(hemiLight)
-          const dirLight = new THREE.DirectionalLight(0xffffff)
-          dirLight.position.set(0, 20, 10)
-          scene.add(dirLight)
-          // scene - ground
-          const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }))
-          mesh.rotation.x = -Math.PI / 2
-          scene.add(mesh)
-          // scene - grid
-          const grid = new THREE.GridHelper(200, 40, 0x000000, 0x000000)
-          grid.material.opacity = 0.2
-          grid.material.transparent = true
-          scene.add(grid)
+          scene.add(hemisphereLight)
+          scene.add(hHelper)
 
           //  控制器
           const controls = new OrbitControls(camera, renderer.domElement)
           controls.enablePan = true
           controls.enableZoom = true
-          controls.target.set(1, 2, 2)
+          controls.target.set(1, 3, 3)
           controls.update()
         },
         (progress) => {
@@ -103,6 +104,17 @@ export default {
       let clipIndex = clips.indexOf(app.mixer.clip)
       clipIndex = (clipIndex + 1) % clips.length
       app.mixer.play(clips[clipIndex])
+    },
+    setCarColor (color) {
+      const currentColor = new THREE.Color(color)
+      const { scene } = this.app
+      scene.traverse(child => {
+        if (child.isMesh) {
+          if (!child.name.includes('wheel')) {
+            child.material.color.set(currentColor)
+          }
+        }
+      })
     }
   }
 }
@@ -119,6 +131,17 @@ export default {
     left: 0;
     display: flex;
     justify-content: center;
+    .fix-botton {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      .color-item {
+        width: 10px;
+        height: 10px;
+        margin: 5px;
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>

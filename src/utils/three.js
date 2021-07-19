@@ -1,3 +1,10 @@
+/*
+ * @Author: shiliangL
+ * @Date: 2021-07-19 08:35:12
+ * @LastEditTime: 2021-07-19 10:47:15
+ * @LastEditors: Do not edit
+ * @Description:
+ */
 import * as THREE from 'three'
 
 class AppThree {
@@ -18,7 +25,7 @@ class AppThree {
 
   // 相机
   static createCamera () {
-    return new THREE.PerspectiveCamera(45, this.innerWidth / this.innerHeight, 0.25, 100)
+    return new THREE.PerspectiveCamera(45, this.innerWidth / this.innerHeight, 0.25, 1000)
   }
 
   // 渲染器
