@@ -1,12 +1,12 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-17 18:32:22
- * @LastEditTime: 2021-07-17 18:40:32
+ * @LastEditTime: 2021-07-19 08:17:17
  * @LastEditors: Do not edit
  * @Description:
  */
 module.exports = {
-  publicPath: './vue-3d-research/',
+  publicPath: './',
   outputDir: 'dist',
   assetsDir: 'static',
   productionSourceMap: false,
