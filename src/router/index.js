@@ -1,27 +1,43 @@
+/*
+ * @Author: shiliangL
+ * @Date: 2021-07-17 21:11:58
+ * @LastEditTime: 2021-07-18 12:54:34
+ * @LastEditors: Do not edit
+ * @Description:
+ */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+const files = require.context('@/views', true, /\.vue$/)
+
+const pages = {}
+files.keys().forEach(key => {
+  pages[key.replace(/(\.\/|\.vue)/g, '')] = files(key).default
+})
+
+// 生成路由规则
+const generator = []
+
+Object.keys(pages).forEach(item => {
+  generator.push({
+    path: pages[item].name ? `/${pages[item].name.replace(/-/g, '/')}` : `/${item}`,
+    name: item,
+    title: pages[item].titleName,
+    component: pages[item]
+  })
+})
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: generator.length ? generator[0].path : null
   },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+  ...generator
 ]
 
 const router = new VueRouter({
   routes
 })
-
+router.pages = generator
 export default router
