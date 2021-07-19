@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-16 13:48:55
- * @LastEditTime: 2021-07-19 12:09:17
+ * @LastEditTime: 2021-07-19 21:46:21
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -17,14 +17,6 @@
           :style="{backgroundColor : item}"
           :key="index"
         ></div>
-
-        <el-button
-          plain
-          v-for="(item,index) in animationsName"
-          type="primary"
-          :key="index"
-          @click="changeAnimation(item)"
-        >{{ item }}</el-button>
       </div>
     </div>
   </div>
@@ -60,6 +52,8 @@ export default {
         (gltf) => {
           const model = gltf.scene
           console.log(model.position, 'xx')
+          model.position.set(0, -40, 0)
+          console.log(model.position, ' model.position')
           const animations = gltf.animations
           console.log(gltf, '模型信息')
           const canvas = this.$refs['3d']
@@ -70,16 +64,22 @@ export default {
           this.app = new AppThree({ canvas, model, animations })
           const { camera, renderer, scene } = this.app
           // camera
-          // camera.position.set(510, 128, 0)
+          camera.position.set(100, 200, 500)
+          camera.lookAt(new THREE.Vector3(0, 1, 0))
+
+          scene.background = new THREE.Color(0xeeeeee)
+
           const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5)
           directionalLight.position.set(-4, 8, 4)
           const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.4)
           hemisphereLight.position.set(0, 8, 0)
-          const hHelper = new THREE.HemisphereLightHelper(hemisphereLight, 5)
           scene.add(directionalLight)
-
           scene.add(hemisphereLight)
-          scene.add(hHelper)
+
+          // 工具类
+          const axes = new THREE.AxisHelper(1000)
+          console.log(axes.position)
+          scene.add(axes)
 
           //  控制器
           const controls = new OrbitControls(camera, renderer.domElement)

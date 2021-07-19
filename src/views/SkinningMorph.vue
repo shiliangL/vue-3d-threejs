@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-16 13:48:55
- * @LastEditTime: 2021-07-19 10:43:33
+ * @LastEditTime: 2021-07-19 21:55:56
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -10,13 +10,13 @@
     <canvas ref="3d"> 3d </canvas>
     <div class="fix-foot">
       <div class="fix-botton">
-        <el-button
-          plain
-          v-for="(item,index) in animationsName"
-          type="primary"
+        <div
+          class="color-item"
+          @click="setCarColor(item)"
+          v-for="(item,index) in colorAry"
+          :style="{backgroundColor : item}"
           :key="index"
-          @click="changeAnimation(item)"
-        >{{ item }}</el-button>
+        ></div>
       </div>
     </div>
   </div>
@@ -37,7 +37,11 @@ export default {
   },
   data () {
     return {
-      animationsName: []
+      animationsName: [],
+      colorAry: [
+        'rgb(216, 27, 67)', 'rgb(142, 36, 170)', 'rgb(81, 45, 168)', 'rgb(48, 63, 159)', 'rgb(30, 136, 229)', 'rgb(0, 137, 123)',
+        'rgb(67, 160, 71)', 'rgb(251, 192, 45)', 'rgb(245, 124, 0)', 'rgb(230, 74, 25)', 'rgb(233, 30, 78)', 'rgb(156, 39, 176)',
+        'rgb(0, 0, 0)']
     }
   },
   methods: {
@@ -47,6 +51,7 @@ export default {
         'models/model_3/scene.gltf',
         (gltf) => {
           const model = gltf.scene
+          model.position.set(0, 0, 0)
           const animations = gltf.animations
           console.log(gltf, '模型信息')
           const canvas = this.$refs['3d']
@@ -56,29 +61,21 @@ export default {
           // 实例化对象
           this.app = new AppThree({ canvas, model, animations })
           const { camera, renderer, scene } = this.app
+          this.initMaterialClickOut(gltf.scene)
           // camera
-          camera.position.set(-5, 3, 10)
-          camera.lookAt(new THREE.Vector3(0, 2, 0))
+          camera.position.set(510, 200, 500)
+          camera.lookAt(new THREE.Vector3(0, 1, 0))
 
-          // scene
-          scene.background = new THREE.Color(0xfffff)
-          scene.fog = new THREE.Fog(0xfffff, 20, 100)
-          // scene - lights
-          const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444)
-          hemiLight.position.set(0, 20, 0)
-          scene.add(hemiLight)
-          const dirLight = new THREE.DirectionalLight(0xffffff)
-          dirLight.position.set(0, 20, 10)
-          scene.add(dirLight)
-          // scene - ground
-          const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0x999999, depthWrite: false }))
-          mesh.rotation.x = -Math.PI / 2
-          scene.add(mesh)
-          // scene - grid
-          const grid = new THREE.GridHelper(200, 40, 0x000000, 0x000000)
-          grid.material.opacity = 0.2
-          grid.material.transparent = true
-          scene.add(grid)
+          const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5)
+          directionalLight.position.set(-4, 8, 4)
+          const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.4)
+          hemisphereLight.position.set(0, 8, 0)
+          scene.add(directionalLight)
+          scene.add(hemisphereLight)
+
+          // 工具类
+          const axes = new THREE.AxisHelper(1000)
+          scene.add(axes)
 
           //  控制器
           const controls = new OrbitControls(camera, renderer.domElement)
@@ -103,6 +100,28 @@ export default {
       let clipIndex = clips.indexOf(app.mixer.clip)
       clipIndex = (clipIndex + 1) % clips.length
       app.mixer.play(clips[clipIndex])
+    },
+    initMaterialClickOut (scene) {
+      scene.traverse(child => {
+        if (child.isMesh) {
+          child.addEventListener('click', (e) => {
+            console.log(child.name, 'child.name')
+          })
+          console.log(child, 'sb')
+        }
+      })
+    },
+    setCarColor (color) {
+      const currentColor = new THREE.Color(color)
+      const { scene } = this.app
+      scene.traverse(child => {
+        if (child.isMesh) {
+          console.log(child.name, 'child.name')
+          if (!child.name.includes('wheel')) {
+            child.material.color.set(currentColor)
+          }
+        }
+      })
     }
   }
 }
@@ -119,6 +138,17 @@ export default {
     left: 0;
     display: flex;
     justify-content: center;
+    .fix-botton {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 20px;
+      .color-item {
+        width: 10px;
+        height: 10px;
+        margin: 5px;
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>
