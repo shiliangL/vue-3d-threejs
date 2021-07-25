@@ -1,9 +1,9 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-25 17:43:03
- * @LastEditTime: 2021-07-25 21:35:08
+ * @LastEditTime: 2021-07-25 21:50:04
  * @LastEditors: Do not edit
- * @Description:
+ * @Description: 主界面
 -->
 
 <template>
@@ -132,6 +132,7 @@ export default {
     overflow-y: auto;
     overflow-x: hidden;
     scroll-behavior: smooth;
+    scrollbar-width: none;
   }
   .layout-footer {
     height: 50px;
