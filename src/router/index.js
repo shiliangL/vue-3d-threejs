@@ -1,6 +1,14 @@
+/*
+ * @Author: shiliangL
+ * @Date: 2020-12-24 09:24:21
+ * @LastEditTime: 2021-07-25 22:13:35
+ * @LastEditors: Do not edit
+ * @Description:
+ */
 import Vue from 'vue'
 import Router from 'vue-router'
-import { constantRouterMap } from './router.config.js'
+import LayoutRoutes from './layoutRoutes'
+import OtherRoutes from './otherRoutes'
 
 // hack router push callback
 const originalPush = Router.prototype.push
@@ -11,12 +19,24 @@ Router.prototype.push = function push(location, onResolve, onReject) {
 
 Vue.use(Router)
 
+const routes = [
+  {
+    path: '/',
+    redirect: LayoutRoutes.length ? LayoutRoutes[0].path : null,
+    component: () => import('@/layout/index'),
+    children: [
+      ...LayoutRoutes
+    ]
+  },
+  ...OtherRoutes
+]
+
 const createRouter = () =>
   new Router({
     // mode: 'history', // 如果你是 history模式 需要配置vue.config.js publicPath
     // base: process.env.BASE_URL,
     scrollBehavior: () => ({ y: 0 }),
-    routes: constantRouterMap
+    routes: routes
   })
 
 const router = createRouter()
@@ -26,5 +46,7 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
-
+console.log(LayoutRoutes, 'LayoutRoutes')
+console.log(OtherRoutes, '-OtherRoutes-')
+router.pages = LayoutRoutes
 export default router

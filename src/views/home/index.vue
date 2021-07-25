@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2020-12-24 09:24:21
- * @LastEditTime: 2021-07-24 22:29:21
+ * @LastEditTime: 2021-07-25 19:25:07
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -9,25 +9,35 @@
 <template>
   <div class="index-container">
     <div class="warpper">
-      <h1 class="demo-home__title"><img src="https://www.sunniejs.cn/static/weapp/logo.png" /><span> VUE H5开发模板</span></h1>
-      <h2 class="demo-home__desc">
-        A vue h5 template with Vant UI
-      </h2>
+      <h1 class="demo-home__title"> VUE H5开发模板 </h1>
     </div>
-    <van-cell icon="success" v-for="item in list" :key="item" :title="item" />
+    <van-cell
+      icon="success"
+      v-for="item in list"
+      :key="item"
+      :title="item"
+    />
   </div>
 </template>
 
 <script>
 export default {
+  meta: {
+    title: '首页',
+    wxAuth: false,
+    keepAlive: true
+  },
   data() {
     return {
       list: [
-        'Vue-cli4',
+        '开发实践框架',
+        'views页面自动注册',
+        'VantUI 自定义主题配置',
+        '可配置微信公众号授权',
+        'Permission权限拦截',
         '配置多环境变量',
         'VantUI 组件按需加载',
         'Sass 全局样式',
-        'Webpack 4',
         'Vuex 状态管理',
         'Axios 封装及接口管理',
         'Vue-router',
@@ -38,7 +48,6 @@ export default {
         '配置 externals 引入 cdn 资源',
         '去掉 console.log',
         'splitChunks 单独打包第三方模块',
-        '添加 IE 兼容',
         'Eslint+Pettier 统一开发规范'
       ]
     }
@@ -58,25 +67,9 @@ export default {
     padding: 12px;
     background: #fff;
     .demo-home__title {
+      text-align: center;
       margin: 0 0 6px;
       font-size: 32px;
-      .demo-home__title img,
-      .demo-home__title span {
-        display: inline-block;
-        vertical-align: middle;
-      }
-      img {
-        width: 32px;
-      }
-      span {
-        margin-left: 16px;
-        font-weight: 500;
-      }
-    }
-    .demo-home__desc {
-      margin: 0 0 20px;
-      color: rgba(69, 90, 100, 0.6);
-      font-size: 14px;
     }
   }
 }

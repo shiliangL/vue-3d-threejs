@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-06-08 11:45:03
- * @LastEditTime: 2021-07-25 17:05:12
+ * @LastEditTime: 2021-07-25 21:40:58
  * @LastEditors: Do not edit
  * @Description:
  * @FilePath: /baoan-wui/src/permission.js
@@ -11,8 +11,8 @@ import router from './router'
 import { getToken, setToken, setKeyValue } from '@/utils/auth' // get token from cookie
 
 router.beforeEach(async(to, from, next) => {
-  console.log(window.location.href, 'window.location.href')
-  console.log(to)
+  // console.log(window.location.href, 'window.location.href')
+  // console.log(to)
   // set page title
   // determine whether the user has logged in
   const hasToken = getToken()

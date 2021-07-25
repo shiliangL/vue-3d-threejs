@@ -1,6 +1,13 @@
+<!--
+ * @Author: shiliangL
+ * @Date: 2020-12-24 09:24:21
+ * @LastEditTime: 2021-07-25 21:17:09
+ * @LastEditors: Do not edit
+ * @Description:
+-->
 <template>
   <div>
-    <van-tabbar fixed route v-model="active" @change="handleChange">
+    <van-tabbar route v-model="active" @change="handleChange" safe-area-inset-bottom>
       <van-tabbar-item v-for="(item, index) in data" :to="item.to" :icon="item.icon" :key="index">
         {{ item.title }}
       </van-tabbar-item>

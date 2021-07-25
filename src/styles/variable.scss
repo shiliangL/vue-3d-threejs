@@ -1,0 +1,33 @@
+$baseColor: #199658;
+$mainColor: #199658;
+$mainDarkColor: #199658;
+
+$dangerColor:#FF726E;
+$dangerDarkColor: #b90f23;
+
+$warningColor: #ff976a;
+$warningDarkColor: #e76a35;
+
+$successColor: #26B778;
+$successDarkColor: #128b4d;
+$bdColor: #ABABAB;
+$subTitleColor: #9B9B9B;
+
+$subTitleTipColor: #9B9B9B;
+
+// the :export directive is the magic sauce for webpack
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+  baseColor: $baseColor;
+  mainColor: $mainColor;
+  mainDarkColor: $mainDarkColor;
+  dangerColor: $dangerColor;
+  dangerDarkColor: $dangerDarkColor;
+  warningColor: $warningColor;
+  warningDarkColor: $warningDarkColor;
+  successColor: $successColor;
+  successDarkColor: $successDarkColor;
+  bdColor: $bdColor;
+  subTitleColor: $subTitleColor;
+  subTitleTipColor: $subTitleTipColor;
+}
