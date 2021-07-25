@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-25 17:50:01
- * @LastEditTime: 2021-07-25 21:55:17
+ * @LastEditTime: 2021-07-25 20:48:48
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -15,7 +15,6 @@
 <script>
 
 import { ThreeApp, THREE } from '@/utils/threeApp'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 export default {
   meta: {
@@ -33,12 +32,12 @@ export default {
       const canvas = this.$refs['3d']
       // 实例化对象
       this.app = new ThreeApp({ canvas })
-      const { scene, camera, renderer } = this.app
+      const { scene, camera, controls } = this.app
       // 创建一个球体几何对象
       const geometry = new THREE.SphereGeometry(60, 40, 40)
       // 材质对象Material
       const material = new THREE.MeshLambertMaterial({
-        color: 0x0000ff
+        color: 0xeeeeee
       })
       // 网格模型对象Mesh
       const mesh = new THREE.Mesh(geometry, material)
@@ -56,9 +55,8 @@ export default {
       camera.lookAt(scene.position) // 设置相机方向(指向的场景对象)
 
       //  控制器
-      const controls = new OrbitControls(camera, renderer.domElement)
       controls.enablePan = true
-      controls.enableZoom = true
+      controls.enableZoom = false
       controls.target.set(1, 3, 3)
       controls.update()
     }

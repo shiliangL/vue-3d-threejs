@@ -1,11 +1,12 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-25 19:27:30
- * @LastEditTime: 2021-07-25 21:53:15
+ * @LastEditTime: 2021-07-25 20:47:31
  * @LastEditors: Do not edit
  * @Description:
  */
 import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 class ThreeApp {
   constructor({ canvas, model, animations }) {
@@ -15,6 +16,8 @@ class ThreeApp {
     this.scene = ThreeApp.createScene()
     this.camera = ThreeApp.createCamera(this.innerWidth, this.innerHeight)
     this.renderer = ThreeApp.createRenderer(canvas, this.innerWidth, this.innerHeight)
+
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement)
     if (model) this.scene.add(model)
     if (model && animations) this.mixer = new AnimationMixer(model, animations)
     this.update()

@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-25 17:43:03
- * @LastEditTime: 2021-07-25 21:24:40
+ * @LastEditTime: 2021-07-25 21:35:08
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -22,8 +22,10 @@
       </keep-alive>
       <router-view v-else></router-view>
     </div>
-
-    <div class="layout-footer">
+    <div
+      class="layout-footer"
+      v-if="!isToggleMenuViews"
+    >
       <TabBar :data="tabbars" />
     </div>
 
@@ -77,8 +79,15 @@ export default {
     }
   },
   computed: {
+    toggleMenuViews() {
+      return this.$router.toggleMenuViews || []
+    },
     menuList() {
-      return this.$router.pages || []
+      return [{ name: 'home/index', path: '/home/index', title: '首页' }, ...this.toggleMenuViews || []]
+    },
+    isToggleMenuViews() {
+      const { toggleMenuViews, $route } = this
+      return toggleMenuViews.some((item) => item.name === $route.name)
     }
   },
   methods: {
@@ -122,7 +131,7 @@ export default {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    scroll-behavior:smooth;
+    scroll-behavior: smooth;
   }
   .layout-footer {
     height: 50px;

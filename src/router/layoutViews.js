@@ -1,15 +1,15 @@
 /*
  * @Author: shiliangL
  * @Date: 2021-07-25 22:09:45
- * @LastEditTime: 2021-07-25 22:11:25
+ * @LastEditTime: 2021-07-25 21:07:31
  * @LastEditors: Do not edit
- * @Description:
+ * @Description: 路由页面 包含底部切换的页面
  */
 
 const pages = {}
 // 生成路由规则
 const layoutRoutes = []
-const files = require.context('@/views', true, /\.vue$/)
+const files = require.context('@/layoutViews', true, /\index.vue$/)
 files.keys().forEach(key => {
   pages[key.replace(/(\.\/|\.vue)/g, '')] = files(key).default
 })

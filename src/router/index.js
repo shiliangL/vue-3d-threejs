@@ -1,14 +1,15 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-24 09:24:21
- * @LastEditTime: 2021-07-25 22:13:35
+ * @LastEditTime: 2021-07-25 21:26:33
  * @LastEditors: Do not edit
  * @Description:
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-import LayoutRoutes from './layoutRoutes'
-import OtherRoutes from './otherRoutes'
+import layoutViews from './layoutViews'
+import otherViews from './otherViews'
+import toggleMenuViews from './toggleMenuViews'
 
 // hack router push callback
 const originalPush = Router.prototype.push
@@ -22,13 +23,14 @@ Vue.use(Router)
 const routes = [
   {
     path: '/',
-    redirect: LayoutRoutes.length ? LayoutRoutes[0].path : null,
+    redirect: layoutViews.length ? layoutViews[0].path : null,
     component: () => import('@/layout/index'),
     children: [
-      ...LayoutRoutes
+      ...layoutViews,
+      ...toggleMenuViews
     ]
   },
-  ...OtherRoutes
+  ...otherViews
 ]
 
 const createRouter = () =>
@@ -46,7 +48,8 @@ export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
 }
-console.log(LayoutRoutes, 'LayoutRoutes')
-console.log(OtherRoutes, '-OtherRoutes-')
-router.pages = LayoutRoutes
+console.log(layoutViews, 'layoutViews')
+console.log(otherViews, 'otherViews')
+console.log(toggleMenuViews, '-toggleMenuViews-')
+router.toggleMenuViews = toggleMenuViews
 export default router
