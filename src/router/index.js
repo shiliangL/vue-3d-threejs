@@ -1,43 +1,30 @@
-/*
- * @Author: shiliangL
- * @Date: 2021-07-17 21:11:58
- * @LastEditTime: 2021-07-18 12:54:34
- * @LastEditors: Do not edit
- * @Description:
- */
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-const files = require.context('@/views', true, /\.vue$/)
+import Router from 'vue-router'
+import { constantRouterMap } from './router.config.js'
 
-const pages = {}
-files.keys().forEach(key => {
-  pages[key.replace(/(\.\/|\.vue)/g, '')] = files(key).default
-})
+// hack router push callback
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
+  return originalPush.call(this, location).catch(err => err)
+}
 
-// 生成路由规则
-const generator = []
+Vue.use(Router)
 
-Object.keys(pages).forEach(item => {
-  generator.push({
-    path: pages[item].name ? `/${pages[item].name.replace(/-/g, '/')}` : `/${item}`,
-    name: item,
-    title: pages[item].titleName,
-    component: pages[item]
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // 如果你是 history模式 需要配置vue.config.js publicPath
+    // base: process.env.BASE_URL,
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRouterMap
   })
-})
 
-Vue.use(VueRouter)
+const router = createRouter()
 
-const routes = [
-  {
-    path: '/',
-    redirect: generator.length ? generator[0].path : null
-  },
-  ...generator
-]
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
 
-const router = new VueRouter({
-  routes
-})
-router.pages = generator
 export default router
