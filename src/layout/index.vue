@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-25 17:43:03
- * @LastEditTime: 2021-07-26 18:12:53
+ * @LastEditTime: 2021-07-26 21:27:34
  * @LastEditors: Do not edit
  * @Description: 主界面
 -->
@@ -74,16 +74,11 @@ export default {
   },
   watch: {
     $route() {
-      const random = this.random
+      const random = this.random()
       this.transitionName = random ? 'slide-right' : 'slide-left'
     }
   },
   computed: {
-    random() {
-      const randomArray = new Array(99).fill(0).map((value, index) => index)
-      const random = randomArray[Math.floor(Math.random() * randomArray.length)]
-      return random % 2 === 1
-    },
     toggleMenuViews() {
       return this.$router.toggleMenuViews || []
     },
@@ -101,6 +96,11 @@ export default {
       setTimeout(() => {
         this.$router.push(item.path)
       }, 300)
+    },
+    random() {
+      const randomArray = new Array(99).fill(0).map((value, index) => index)
+      const random = randomArray[Math.floor(Math.random() * randomArray.length)]
+      return random % 2 === 1
     }
   }
 }
