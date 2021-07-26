@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-25 17:43:03
- * @LastEditTime: 2021-07-26 18:03:24
+ * @LastEditTime: 2021-07-26 18:12:53
  * @LastEditors: Do not edit
  * @Description: 主界面
 -->
@@ -19,11 +19,11 @@
     <div class="layout-content">
       <transition :name="transitionName">
         <keep-alive v-if="$route.meta.keepAlive">
-          <router-view class="router-view" />
+          <router-view class="router-view hide-scroll-bar " />
         </keep-alive>
         <router-view
           v-else
-          class="router-view"
+          class="router-view hide-scroll-bar "
         />
       </transition>
     </div>
@@ -136,6 +136,7 @@ export default {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
     scroll-behavior: smooth;
     scrollbar-width: none;
   }
