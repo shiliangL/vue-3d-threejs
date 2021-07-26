@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-25 17:43:03
- * @LastEditTime: 2021-07-25 21:50:04
+ * @LastEditTime: 2021-07-26 18:03:24
  * @LastEditors: Do not edit
  * @Description: 主界面
 -->
@@ -17,10 +17,15 @@
       <div></div>
     </div>
     <div class="layout-content">
-      <keep-alive v-if="$route.meta.keepAlive">
-        <router-view></router-view>
-      </keep-alive>
-      <router-view v-else></router-view>
+      <transition :name="transitionName">
+        <keep-alive v-if="$route.meta.keepAlive">
+          <router-view class="router-view" />
+        </keep-alive>
+        <router-view
+          v-else
+          class="router-view"
+        />
+      </transition>
     </div>
     <div
       class="layout-footer"
@@ -61,24 +66,24 @@ export default {
     return {
       showMenu: false,
       tabbars: [
-        {
-          title: '首页',
-          to: {
-            path: '/home/index'
-          },
-          icon: 'home-o'
-        },
-        {
-          title: '关于我',
-          to: {
-            path: '/about/index'
-          },
-          icon: 'user-o'
-        }
-      ]
+        { title: '首页', to: { path: '/home/index' }, icon: 'home-o' },
+        { title: '关于我', to: { path: '/about/index' }, icon: 'user-o' }
+      ],
+      transitionName: 'slide-left'
+    }
+  },
+  watch: {
+    $route() {
+      const random = this.random
+      this.transitionName = random ? 'slide-right' : 'slide-left'
     }
   },
   computed: {
+    random() {
+      const randomArray = new Array(99).fill(0).map((value, index) => index)
+      const random = randomArray[Math.floor(Math.random() * randomArray.length)]
+      return random % 2 === 1
+    },
     toggleMenuViews() {
       return this.$router.toggleMenuViews || []
     },
