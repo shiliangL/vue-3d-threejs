@@ -1,10 +1,12 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-24 09:24:21
- * @LastEditTime: 2021-07-25 17:12:07
+ * @LastEditTime: 2021-07-26 22:07:33
  * @LastEditors: Do not edit
  * @Description:
  */
+
+import 'normalize.css/normalize.css'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
