@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-25 17:50:01
- * @LastEditTime: 2021-07-25 20:48:48
+ * @LastEditTime: 2021-07-26 20:22:59
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -33,6 +33,7 @@ export default {
       // 实例化对象
       this.app = new ThreeApp({ canvas })
       const { scene, camera, controls } = this.app
+
       // 创建一个球体几何对象
       const geometry = new THREE.SphereGeometry(60, 40, 40)
       // 材质对象Material

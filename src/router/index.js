@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-24 09:24:21
- * @LastEditTime: 2021-07-25 21:26:33
+ * @LastEditTime: 2021-07-26 20:44:41
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -23,7 +23,7 @@ Vue.use(Router)
 const routes = [
   {
     path: '/',
-    redirect: layoutViews.length ? layoutViews[0].path : null,
+    redirect: '/home/index',
     component: () => import('@/layout/index'),
     children: [
       ...layoutViews,
