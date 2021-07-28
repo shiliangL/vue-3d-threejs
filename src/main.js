@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-12-24 09:24:21
- * @LastEditTime: 2021-07-26 22:07:33
+ * @LastEditTime: 2021-07-28 10:29:49
  * @LastEditors: Do not edit
  * @Description:
  */
@@ -30,9 +30,18 @@ Vue.config.productionTip = false
 // 权限
 import './permission'
 
+// eslint-disable-next-line no-unused-vars
+function loadJScript() {
+  const script = document.createElement('script')
+  script.type = 'text/javascript'
+  script.src = '//api.map.baidu.com/api?type=webgl&v=1.0&ak=FaK2CGZxsxgQOuOXmfQlKTyuT6CPnAX5&callback=init'
+  document.body.appendChild(script)
+}
 new Vue({
   el: '#app',
   router,
   store,
   render: h => h(App)
 })
+
+window.onload = loadJScript // 异步加载地图

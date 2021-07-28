@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-25 17:50:01
- * @LastEditTime: 2021-07-26 22:09:17
+ * @LastEditTime: 2021-07-27 08:57:27
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -18,14 +18,11 @@
             <img src="//lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/f597b88d22ce5370bd94495780459040.svg">
           </h1>
         </div>
-        <div class="position">
-          <div
-            st:name="profileBtn"
-            title="填写职位信息"
-            class="info-input"
-          >你从事什么职业？</div>
+        <div class="position flex-box-center">
+          <div class="info-input"> 你从事什么职业？</div>
         </div>
-        <div class="intro"><svg
+        <div class="intro flex-box-center">
+          <svg
             width="21"
             height="18"
             viewBox="0 0 21 18"
@@ -124,25 +121,32 @@ export default {
     title: '关于我',
     wxAuth: false,
     keepAlive: true
+  },
+  mounted() {
+    console.log(window.location.origin, 'window.location.origin')
   }
 }
 </script>
 
 <style lang="scss" scoped>
 .ser-info-block {
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.55rem 1rem;
+  background: #ffff;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
   .avatar {
     flex: 0 0 auto;
-    width: 110px;
-    height: 110px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     background-color: #f9f9f9;
   }
   .info-box {
+    .username {
+      margin: 8px 0;
+    }
     .content {
       opacity: 0.7;
       color: #30445a;
@@ -155,7 +159,7 @@ export default {
     flex-direction: column;
   }
   .link-box {
-    padding: 10px;
+    padding: 6px;
     display: flex;
     align-items: center;
   }
@@ -167,12 +171,12 @@ export default {
       flex: 1;
       text-align: center;
       .count {
-        font-size: 20px;
         display: flex;
+        font-weight: 500;
+        font-size: 18px;
+        margin-bottom: 4px;
         flex-direction: column;
         color: #30445a;
-        font-weight: 500;
-        margin-bottom: 4px;
       }
       span {
         opacity: 0.5;

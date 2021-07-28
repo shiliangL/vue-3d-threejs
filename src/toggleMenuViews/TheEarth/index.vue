@@ -1,7 +1,7 @@
 <!--
  * @Author: shiliangL
  * @Date: 2021-07-25 17:50:01
- * @LastEditTime: 2021-07-26 20:43:42
+ * @LastEditTime: 2021-07-27 09:30:07
  * @LastEditors: Do not edit
  * @Description:
 -->
@@ -51,7 +51,7 @@ export default {
 
       // 创建纹理贴图
       const textureLoader = new THREE.TextureLoader()
-      textureLoader.load('/textures/map.png', texture => {
+      textureLoader.load(require('@/assets/textures/map.png'), texture => {
         const material = new THREE.MeshLambertMaterial({ map: texture, transparent: true })
         const mesh = new THREE.Mesh(geometry, material)
         scene.add(mesh)

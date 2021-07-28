@@ -7,6 +7,14 @@ module.exports = {
   parserOptions: {
     parser: 'babel-eslint'
   },
+  globals: {
+    "BMap": true,
+    "BMapGL": true,
+    "BMAP_NORMAL_MAP": true,
+    "BMAP_HYBRID_MAP":true,
+    "BMAP_ANCHOR_TOP_LEFT":true,
+    "BMAP_ANCHOR_TOP_RIGHT":true,
+  },
   rules: {
     'vue/max-attributes-per-line': [
       2,

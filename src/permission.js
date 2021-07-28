@@ -1,7 +1,7 @@
 /*
  * @Author: shiliangL
  * @Date: 2020-06-08 11:45:03
- * @LastEditTime: 2021-07-25 21:40:58
+ * @LastEditTime: 2021-07-27 08:48:26
  * @LastEditors: Do not edit
  * @Description:
  * @FilePath: /baoan-wui/src/permission.js
@@ -50,6 +50,7 @@ router.beforeEach(async(to, from, next) => {
 export function auth(path) {
   const appid = 'wx1f67f77de0c04cce'
   const origin = window.location.origin
+  console.log(origin, 'origin')
   const redirecUrl = encodeURIComponent(origin + '/#' + path)
   const scope = 'snsapi_base'// 'snsapi_userinfo'
   const params = `?appid=${appid}&redirect_uri=${redirecUrl}&response_type=code&scope=${scope}&state=1#wechat_redirect`

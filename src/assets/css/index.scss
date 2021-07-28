@@ -37,6 +37,28 @@ canvas {
   }
 }
 
+.flex-box{
+  display: flex;
+}
+
+.flex-box-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-box-around{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.flex-box-between{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .wx100 {
   width: 100%;
   height: 100%;
@@ -46,7 +68,6 @@ canvas {
 .router-view{
   width: 100%;
   height: 100%;
-  height: auto;
   position: absolute;
   top: 0;
   bottom: 0;
